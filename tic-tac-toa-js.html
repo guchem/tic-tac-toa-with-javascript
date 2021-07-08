@@ -1,0 +1,166 @@
+<!--author : guchim -->
+<!--date : july 8 2021-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+       table{
+           width:50%;
+           margin-left: 25%;
+           margin-top:100px;
+       }
+       td {
+           width:33%;
+           height:100%;
+       }
+       table button{
+           width:98%;
+           border:1px solid black;
+       }
+       #intro{
+           padding-top:60px;
+           text-align: center;
+       }
+       .winner{
+           color: greenyellow;
+       }
+       #starter-div{
+           text-align: center;
+       }
+       #starter-button{
+           background: limegreen;
+       }
+       .player-name{
+           color:blue;
+           font-family: "Times New Roman", Serif, serif;
+       }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div id="intro">
+        <h1>Welcome To Tic-Tac-Toa</h1>
+        <h2 id="status">Click Start Button</h2>
+    </div>
+    <div id="starter-div"><button id="starter-button"><h1>Start The Game</h1></button></div>
+    <table>
+        <tr>
+            <td>
+                <div>
+                    <button id="1"><h1>-</h1></button>
+                </div>
+            </td>
+            <td>
+                <div>
+                    <button id="2"><h1>-</h1></button>
+                </div>
+            </td>
+            <td>
+                <div>
+                    <button id="3"><h1>-</h1></button>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div>
+                    <button id="4"><h1>-</h1></button>
+                </div>
+            </td>
+            <td>
+                <div>
+                    <button id="5"><h1>-</h1></button>
+                </div>
+            </td>
+            <td>
+                <div>
+                    <button id="6"><h1>-</h1></button>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div>
+                    <button id="7"><h1>-</h1></button>
+                </div>
+            </td>
+            <td>
+                <div>
+                    <button id="8"><h1>-</h1></button>
+                </div>
+            </td>
+            <td>
+                <div>
+                    <button id="9"><h1>-</h1></button>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+<script>
+    let starter = document.getElementById('starter-button');
+    starter.addEventListener('click', function(){
+        starter.parentElement.style.display='none';
+
+    let btns = document.querySelectorAll('button');
+    let player1 = prompt('Player 1 Please enter your name : ').toUpperCase();
+    let player2 = prompt('Player 1 Please enter your name : ').toUpperCase();
+    document.getElementById('status').innerHTML =
+        `<span class="player-name">${player1}</span> you are X and  <span class="player-name">${player2}</span> you are O <br><span class="player-name">${player1}</span> : you can Start the game`
+    let [player1Symbol, player2Symbol] = ['X', 'O'];
+    let currentPlayer = player1;
+    let currentPlayerSymbol = player1Symbol;
+    let gameOn=true;
+    function checkWin(){
+        let position1 = document.getElementById('1').firstElementChild.textContent;
+        let position2 = document.getElementById('2').firstElementChild.textContent;
+        let position3 = document.getElementById('3').firstElementChild.textContent;
+        let position4 = document.getElementById('4').firstElementChild.textContent;
+        let position5 = document.getElementById('5').firstElementChild.textContent;
+        let position6 = document.getElementById('6').firstElementChild.textContent;
+        let position7 = document.getElementById('7').firstElementChild.textContent;
+        let position8 = document.getElementById('8').firstElementChild.textContent;
+        let position9 = document.getElementById('9').firstElementChild.textContent;
+
+        return position1 === position2 && position2=== position3 && position3 !== '-' ||
+            position4 === position5 && position5 === position6 && position6 !== '-' ||
+            position7 === position8 && position8 === position9 && position9 !== '-' ||
+            position1 === position4 && position4 === position7 && position7 !== '-' ||
+            position2 === position5 && position5 === position8 && position8 !== '-' ||
+            position3 === position6 && position6 === position9 && position9 !== '-' ||
+            position1 === position5 && position5 === position9 && position9 !== '-' ||
+            position3 === position5 && position5 === position7 && position7 !== '-';
+    }
+
+for (let i=0;i<9;i++){
+    let btn  = btns[i];
+
+        btn.addEventListener('click', function () {
+            if (btn.firstElementChild.textContent !== 'X' && btn.firstElementChild.textContent !== 'O' && gameOn) {
+                btn.firstElementChild.textContent = currentPlayerSymbol;
+                let status = document.getElementById('status')
+                if (checkWin()){
+                    status.textContent = `${currentPlayer} has won . refresh the page to restart the game`;
+                    status.classList.add('winner');
+                    document.querySelector('body').style.backgroundColor = 'gray';
+                    gameOn = false;
+                } else {
+                    currentPlayer = currentPlayer === player1 ? player2 : player1;
+                    currentPlayerSymbol = currentPlayerSymbol === player1Symbol ? player2Symbol : player1Symbol;
+                    status.innerHTML = `<span class="player-name">${player1}</span> you are X and  <span class="player-name">${player2}</span> you are O <br><span class="player-name">${currentPlayer}</span> : its your turn`
+                }
+
+            }
+        })
+    }
+
+    })
+</script>
+</body>
+</html>
